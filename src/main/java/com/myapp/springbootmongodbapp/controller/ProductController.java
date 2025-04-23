@@ -26,9 +26,9 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductDto>> getProductById(@PathVariable Long id) {
-         var product = productService.getProductById(id);
+    @GetMapping("/{productId}")
+    public ResponseEntity<ApiResponse<ProductDto>> getProductByproductId(@PathVariable Integer productId) {
+         var product = productService.getProductByProductId(productId);
          var response = new ApiResponse<>(
                 AppConstants.SUCCESS,
                 product
@@ -46,9 +46,9 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
-        var updatedProduct = productService.updateProduct(id, productDto);
+    @PatchMapping("/{productId}")
+    public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable Integer productId, @RequestBody ProductDto productDto) {
+        var updatedProduct = productService.updateProduct(productId, productDto);
         var response = new ApiResponse<>(
                 AppConstants.SUCCESS,
                 updatedProduct
@@ -56,9 +56,9 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Object>> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<ApiResponse<Object>> deleteProduct(@PathVariable Integer productId) {
+        productService.deleteProduct(productId);
         var response = new ApiResponse<>(
                 AppConstants.SUCCESS,
                 null

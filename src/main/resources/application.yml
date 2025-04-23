@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: springboot-mongodb-app
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/appdb
+
+Server:
+  port: 8080

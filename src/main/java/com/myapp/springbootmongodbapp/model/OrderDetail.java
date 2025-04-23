@@ -15,9 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class OrderDetail {
 
     @Id
-    private Long orderDetailId;
-    private Long orderId;
-    private Long productId;
+    private Integer orderDetailId;
+    private Integer orderId;
+    private Integer productId;
     private Integer quantity;
 }
 

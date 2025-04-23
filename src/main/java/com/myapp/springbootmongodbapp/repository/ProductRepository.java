@@ -8,12 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends MongoRepository<Product, Long> {
+public interface ProductRepository extends MongoRepository<Product, Integer> {
 
-    @Override
-    List<Product> findAll();
+    // Define additional custom queries here if needed
+    // For example, you can add methods to find products by name, category, etc.
+    // Example: Optional<Product> findByName(String name);
 
-    @Override
-    Optional<Product> findById(Long productId);
 
 }

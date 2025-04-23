@@ -1,7 +1,5 @@
 package com.myapp.springbootmongodbapp.model;
 
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Customer {
 
     @Id
-    private Long customerId;
+    private Integer customerId;
     private String customerName;
     private String address;
     private String city;

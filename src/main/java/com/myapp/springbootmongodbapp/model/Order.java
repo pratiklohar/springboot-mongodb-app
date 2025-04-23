@@ -18,8 +18,8 @@ import java.time.LocalDate;
 public class Order {
 
     @Id
-    private Long orderId;
-    private Long customerId;
+    private Integer orderId;
+    private Integer customerId;
     private LocalDate orderDate;
 }
 
