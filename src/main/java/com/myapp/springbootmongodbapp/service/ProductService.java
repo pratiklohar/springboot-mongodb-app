@@ -8,7 +8,7 @@ public interface ProductService {
 
     List<ProductDto> getAllProducts();
 
-    ProductDto getProductByProductId(Integer productId);
+    ProductDto getProductById(Integer productId);
 
     ProductDto addProduct(ProductDto productDto);
 
