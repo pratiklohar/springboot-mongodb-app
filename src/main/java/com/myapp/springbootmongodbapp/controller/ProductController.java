@@ -32,7 +32,7 @@ public class ProductController {
         return ResponseEntity.ok(ApiResponse.success(productService.addProduct(productDto)));
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable Integer id, @RequestBody ProductDto productDto) {
         return ResponseEntity.ok(ApiResponse.success(productService.updateProduct(id, productDto)));
     }

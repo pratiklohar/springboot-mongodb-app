@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,16 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto updateCustomer(Integer customerId, CustomerDto customerDto) {
-        var customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CUSTOMER_NOT_FOUND));
-
-        Optional.ofNullable(customerDto.customerName()).ifPresent(customer::setCustomerName);
-        Optional.ofNullable(customerDto.address()).ifPresent(customer::setAddress);
-        Optional.ofNullable(customerDto.city()).ifPresent(customer::setCity);
-        Optional.ofNullable(customerDto.postalCode()).ifPresent(customer::setPostalCode);
-        Optional.ofNullable(customerDto.country()).ifPresent(customer::setCountry);
-        Optional.ofNullable(customerDto.state()).ifPresent(customer::setState);
-
+        var customer = customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CUSTOMER_NOT_FOUND));
         return toDto(customerRepository.save(customer));
     }
 
