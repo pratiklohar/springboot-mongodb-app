@@ -1,14 +1,15 @@
 package com.myapp.springbootmongodbapp.controller;
 
-import com.myapp.springbootmongodbapp.constants.AppConstants;
 import com.myapp.springbootmongodbapp.dto.ApiResponse;
 import com.myapp.springbootmongodbapp.dto.ProductDto;
 import com.myapp.springbootmongodbapp.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RequestMapping("/products")
 @RestController
 @RequiredArgsConstructor
@@ -18,51 +19,27 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<ProductDto>>> getAllProducts() {
-        var products = productService.getAllProducts();
-        var response = new ApiResponse<>(
-                AppConstants.SUCCESS,
-                products
-        );
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(productService.getAllProducts()));
     }
 
-    @GetMapping("/{productId}")
-    public ResponseEntity<ApiResponse<ProductDto>> getProductByproductId(@PathVariable Integer productId) {
-         var product = productService.getProductByProductId(productId);
-         var response = new ApiResponse<>(
-                AppConstants.SUCCESS,
-                product
-        );
-        return ResponseEntity.ok(response);
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProductDto>> getProductById(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.success(productService.getProductById(id)));
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<ProductDto>> addProduct(@RequestBody ProductDto productDto) {
-        var savedProduct = productService.addProduct(productDto);
-        var response = new ApiResponse<>(
-                AppConstants.SUCCESS,
-                savedProduct
-        );
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ApiResponse<ProductDto>> addProduct(@RequestBody @Valid ProductDto productDto) {
+        return ResponseEntity.ok(ApiResponse.success(productService.addProduct(productDto)));
     }
 
-    @PatchMapping("/{productId}")
-    public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable Integer productId, @RequestBody ProductDto productDto) {
-        var updatedProduct = productService.updateProduct(productId, productDto);
-        var response = new ApiResponse<>(
-                AppConstants.SUCCESS,
-                updatedProduct
-        );
-        return ResponseEntity.ok(response);
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProductDto>> updateProduct(@PathVariable Integer id, @RequestBody ProductDto productDto) {
+        return ResponseEntity.ok(ApiResponse.success(productService.updateProduct(id, productDto)));
     }
 
-    @DeleteMapping("/{productId}")
-    public ResponseEntity<ApiResponse<Object>> deleteProduct(@PathVariable Integer productId) {
-        productService.deleteProduct(productId);
-        var response = new ApiResponse<>(
-                AppConstants.SUCCESS,
-                null
-        );
-        return ResponseEntity.ok(response);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<?>> deleteProduct(@PathVariable Integer id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 }

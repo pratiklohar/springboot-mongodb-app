@@ -1,20 +1,17 @@
 package com.myapp.springbootmongodbapp.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class CustomerDto {
-    private Integer customerId;
-    private String customerName;
-    private String address;
-    private String city;
-    private String postalCode;
-    private String country;
-    private String state;
+public record CustomerDto(
+        Integer customerId,
+        @NotBlank(message = "Customer name is required")
+        String customerName,
+        String address,
+        String city,
+        String postalCode,
+        String country,
+        String state,
+        @NotBlank(message = "Mobile number is required")
+        String mobileNumber
+) {
 }
