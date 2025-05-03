@@ -7,10 +7,12 @@ import com.myapp.springbootmongodbapp.exception.ResourceNotFoundException;
 import com.myapp.springbootmongodbapp.model.Customer;
 import com.myapp.springbootmongodbapp.repository.CustomerRepository;
 import com.myapp.springbootmongodbapp.service.CustomerService;
+import com.myapp.springbootmongodbapp.util.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -35,12 +37,21 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto addCustomer(CustomerDto customerDto) {
-        return toDto(customerRepository.save(toEntity(customerDto)));
+        if (customerRepository.existsByCustomerNameAndMobileNumber(customerDto.customerName(), customerDto.mobileNumber())) {
+            throw new ResourceNotFoundException(ErrorMessages.CUSTOMER_EXIST);
+        }
+        var customer = toEntity(customerDto);
+        customer.setCustomerId(IdGenerator.generateId(customerDto.customerName(),customerRepository::existsById));
+        return toDto(customerRepository.save(customer));
     }
 
     @Override
     public CustomerDto updateCustomer(Integer customerId, CustomerDto customerDto) {
-        var customer = customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.CUSTOMER_NOT_FOUND));
+        if (!customerRepository.existsById(customerId)) {
+            throw new ResourceNotFoundException(ErrorMessages.CUSTOMER_NOT_FOUND);
+        }
+        var customer = toEntity(customerDto);
+        customer.setCustomerId(customerId);
         return toDto(customerRepository.save(customer));
     }
 
@@ -81,5 +92,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customerDto.mobileNumber()
         );
     }
+
+
 
 }

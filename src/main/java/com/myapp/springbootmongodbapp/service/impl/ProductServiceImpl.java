@@ -1,4 +1,4 @@
-package com.myapp.springbootpostgresqlapp.service.impl;
+package com.myapp.springbootmongodbapp.service.impl;
 
 
 import com.myapp.springbootmongodbapp.constants.ErrorMessages;
@@ -7,11 +7,12 @@ import com.myapp.springbootmongodbapp.exception.ResourceNotFoundException;
 import com.myapp.springbootmongodbapp.model.Product;
 import com.myapp.springbootmongodbapp.repository.ProductRepository;
 import com.myapp.springbootmongodbapp.service.ProductService;
+import com.myapp.springbootmongodbapp.util.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -36,21 +37,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto addProduct(ProductDto productDto) {
-        if (productRepository.existsByProductNameAndCategoryIdAndUnitWeightAndWeightType(
-                productDto.productName(),
-                productDto.categoryId(),
-                productDto.unitWeight(),
-                productDto.weightType()
-        )) {
+        if (productRepository.existsByProductNameAndCategoryIdAndUnitWeightAndWeightType(productDto.productName(), productDto.categoryId(), productDto.unitWeight(), productDto.weightType())) {
             throw new ResourceNotFoundException(ErrorMessages.PRODUCT_EXIST);
-        } else {
-            return toDto(productRepository.save(toEntity(productDto)));
         }
+        var product = toEntity(productDto);
+        product.setProductId(IdGenerator.generateId(productDto.productName(), productRepository::existsById));
+        return toDto(productRepository.save(product));
     }
 
     @Override
     public ProductDto updateProduct(Integer productId, ProductDto productDto) {
-        var product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND));
+        if (!productRepository.existsById(productId)) {
+            throw new ResourceNotFoundException(ErrorMessages.CUSTOMER_NOT_FOUND);
+        }
+        var product = toEntity(productDto);
+        product.setProductId(productId);
         return toDto(productRepository.save(product));
     }
 
