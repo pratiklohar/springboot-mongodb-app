@@ -10,9 +10,7 @@ import com.myapp.springbootmongodbapp.service.ProductService;
 import com.myapp.springbootmongodbapp.util.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor

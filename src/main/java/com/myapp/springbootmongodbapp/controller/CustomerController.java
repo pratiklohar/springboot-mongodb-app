@@ -1,6 +1,4 @@
 package com.myapp.springbootmongodbapp.controller;
-
-
 import com.myapp.springbootmongodbapp.dto.ApiResponse;
 import com.myapp.springbootmongodbapp.dto.CustomerDto;
 import com.myapp.springbootmongodbapp.service.CustomerService;
