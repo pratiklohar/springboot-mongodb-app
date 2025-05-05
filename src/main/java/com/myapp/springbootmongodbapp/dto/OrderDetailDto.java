@@ -1,9 +1,10 @@
 package com.myapp.springbootmongodbapp.dto;
 
+
 public record OrderDetailDto(
-        Integer orderDetailId,
-        Integer orderId,
-        Integer productId,
+        String orderDetailId,
+        String orderId,
+        String productId,
         Integer quantity
 ) {
 }

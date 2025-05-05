@@ -1,6 +1,5 @@
 package com.myapp.springbootmongodbapp.service.impl;
 
-
 import com.myapp.springbootmongodbapp.constants.ErrorMessages;
 import com.myapp.springbootmongodbapp.dto.ProductDto;
 import com.myapp.springbootmongodbapp.exception.ResourceNotFoundException;
@@ -10,7 +9,9 @@ import com.myapp.springbootmongodbapp.service.ProductService;
 import com.myapp.springbootmongodbapp.util.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto getProductById(Integer productId) {
+    public ProductDto getProductById(String productId) {
         return productRepository.findById(productId)
                 .map(this::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND));
@@ -36,17 +37,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto addProduct(ProductDto productDto) {
         if (productRepository.existsByProductNameAndCategoryIdAndUnitWeightAndWeightType(productDto.productName(), productDto.categoryId(), productDto.unitWeight(), productDto.weightType())) {
-            throw new ResourceNotFoundException(ErrorMessages.PRODUCT_EXIST);
+            throw new RuntimeException(ErrorMessages.PRODUCT_EXIST);
         }
         var product = toEntity(productDto);
-        product.setProductId(IdGenerator.generateId(productDto.productName(), productRepository::existsById));
+        product.setProductId(IdGenerator.generateId());
         return toDto(productRepository.save(product));
     }
 
     @Override
-    public ProductDto updateProduct(Integer productId, ProductDto productDto) {
+    public ProductDto updateProduct(String productId, ProductDto productDto) {
         if (!productRepository.existsById(productId)) {
-            throw new ResourceNotFoundException(ErrorMessages.CUSTOMER_NOT_FOUND);
+            throw new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND);
         }
         var product = toEntity(productDto);
         product.setProductId(productId);
@@ -54,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Integer productId) {
+    public void deleteProduct(String productId) {
         if (!productRepository.existsById(productId)) {
             throw new ResourceNotFoundException(ErrorMessages.PRODUCT_NOT_FOUND);
         }

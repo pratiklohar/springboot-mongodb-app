@@ -8,11 +8,11 @@ public interface ProductService {
 
     List<ProductDto> getAllProducts();
 
-    ProductDto getProductById(Integer productId);
+    ProductDto getProductById(String productId);
 
     ProductDto addProduct(ProductDto productDto);
 
-    ProductDto updateProduct(Integer productId, ProductDto productDto);
+    ProductDto updateProduct(String productId, ProductDto productDto);
 
-    void deleteProduct(Integer productId);
+    void deleteProduct(String productId);
 }

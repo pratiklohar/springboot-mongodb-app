@@ -30,7 +30,7 @@ public class ApiResponse<T> {
     }
 
     // Factory method: error
-    public static <T> ApiResponse<T> error( String errorCode, T errorMessage) {
+    public static <T> ApiResponse<T> error(String errorCode, T errorMessage) {
         return new ApiResponse<>(false, null, errorCode, errorMessage);
     }
 }

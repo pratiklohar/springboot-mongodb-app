@@ -2,10 +2,13 @@ package com.myapp.springbootmongodbapp.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+
 public record CustomerDto(
-        Integer customerId,
-        @NotBlank(message = "Customer name is required")
-        String customerName,
+        String customerId,
+        @NotBlank(message = "First name is required")
+        String firstName,
+        @NotBlank(message = "Last name is required")
+        String lastName,
         String address,
         String city,
         String postalCode,
