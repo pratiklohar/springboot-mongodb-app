@@ -1,18 +1,22 @@
 package com.myapp.springbootmongodbapp.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
+
 
 public record ProductDto(
-        Integer productId,
+        String productId,
         @NotBlank(message = "Product name is required")
         String productName,
-        @NotBlank(message = "Category ID is required")
-        Integer categoryId,
-        @NotBlank(message = "Price is required")
+        @NotNull(message = "Category ID is required")
+        String categoryId,
+        @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
+        @NotNull(message = "Price is required")
         Double price,
-        @NotBlank(message = "Quantity is required")
+        @Min(value = 1, message = "Minimum quantity is 1")
+        @NotNull(message = "Quantity is required")
         Integer quantity,
-        @NotBlank(message = "Unit weight is required")
+        @Positive(message = "Must be positive")
+        @NotNull(message = "Unit weight is required")
         Integer unitWeight,
         @NotBlank(message = "Weight type is required")
         String weightType,

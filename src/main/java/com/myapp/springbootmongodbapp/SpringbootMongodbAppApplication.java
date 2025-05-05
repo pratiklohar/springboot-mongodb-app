@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringbootMongodbAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringbootMongodbAppApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootMongodbAppApplication.class, args);
+    }
 
 }
